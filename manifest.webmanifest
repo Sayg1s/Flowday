@@ -1,9 +1,25 @@
 {
   "name": "Flowday — визуальный планировщик",
   "short_name": "Flowday",
+  "description": "Визуальное расписание, задачи и заметки",
   "start_url": "./",
+  "scope": "./",
   "display": "standalone",
-  "background_color": "#f4f6fb",
-  "theme_color": "#111827",
-  "description": "Визуальное расписание, задачи и заметки"
+  "orientation": "portrait",
+  "background_color": "#19171d",
+  "theme_color": "#d978a5",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "maskable"
+    }
+  ]
 }
