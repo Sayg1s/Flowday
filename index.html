@@ -7,7 +7,7 @@
 <meta name="description" content="Flowday — визуальный планировщик времени и задач">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" type="image/svg+xml" href="icon.svg">
-<link rel="apple-touch-icon" href="icon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="Flowday">
@@ -38,7 +38,7 @@
 @media(max-width:420px){.quickstats{grid-template-columns:1fr 1fr}}
 
 /* Flowday stage 2 */
-.theme-toggle{color:var(--accent)}
+.theme-toggle{color:var(--accent);display:grid;place-items:center;line-height:0;padding:0}.theme-toggle svg{display:block;width:20px;height:20px;flex:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;fill:none}
 .event.past{opacity:.48;filter:saturate(.55)}
 .event.current{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 35%,transparent)}
 .now-row{display:grid;grid-template-columns:55px 1fr;gap:12px;align-items:center;margin:2px 0 8px;position:relative;z-index:2}
@@ -120,7 +120,7 @@ function remember(e){let h=data.history.find(x=>x.title.toLowerCase()===e.title.
 function render(){
   $('#todayPill').textContent=new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'short'});
   let themeBtn=$('#themeToggle');
-  if(themeBtn){themeBtn.textContent=document.documentElement.dataset.theme==='dark'?'☀':'☾';themeBtn.classList.add('theme-toggle')}
+  if(themeBtn){themeBtn.innerHTML=document.documentElement.dataset.theme==='dark'?'<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="4"/><path d="M12 2v2m0 16v2M4.93 4.93l1.42 1.42m11.3 11.3 1.42 1.42M2 12h2m16 0h2M4.93 19.07l1.42-1.42m11.3-11.3 1.42-1.42"/></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.2 15.4A8.5 8.5 0 0 1 8.6 3.8 8.5 8.5 0 1 0 20.2 15.4Z"/></svg>';themeBtn.classList.add('theme-toggle')}
   $$('#bottomnav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
   let m=$('#main');
   if(tab==='day')m.innerHTML=renderDay();
