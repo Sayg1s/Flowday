@@ -39,6 +39,16 @@ h1{font-size:30px;letter-spacing:-1px;margin:8px 0 4px}.sub{color:var(--muted);m
 .event.past .eventname,.event.past .eventtime,.event.past .eventdesc{opacity:.7!important}
 .event-finish{display:inline-flex!important;align-items:center;justify-content:center;min-height:34px;margin-top:12px;padding:8px 14px;background:var(--accent)!important;border:1px solid var(--accent)!important;border-radius:9px;color:#fff!important;font:inherit;font-size:12px;font-weight:800;cursor:pointer;position:relative;z-index:10;opacity:1!important}
 .event-finish:hover{filter:brightness(1.1)}
+
+/* v28: force pure white text for active and upcoming events */
+.event:not(.past) .eventname,
+.event:not(.past) .eventtime,
+.event:not(.past) .eventdesc,
+.event:not(.past) .subtasks,
+.event:not(.past) .subtask,
+.event:not(.past) .subtask span:not(.doneText),
+.event:not(.past) .subtask label { color:#ffffff !important; opacity:1 !important; }
+.event:not(.past) .eventname,.event:not(.past) .eventtime,.event:not(.past) .eventdesc { text-shadow:none !important; }
 </style>
 </head>
 <body>
