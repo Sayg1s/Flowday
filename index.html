@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111827">
+<meta name="description" content="Flowday — визуальный планировщик времени и задач">
+<link rel="manifest" href="manifest.webmanifest">
+<title>Flowday — планировщик</title>
+<style>
+:root{color-scheme:light;--bg:#f7f5f8;--surface:#fff;--surface2:#fbf7fa;--text:#252231;--muted:#898395;--line:#eee8ef;--blue:#d978a5;--blue2:#fbeaf2;--red:#e66b83;--green:#45ae8b;--shadow:0 12px 35px #39243d10;--radius:20px;--accent:#d978a5;--accent-soft:#fbeaf2;--nav:#fffdff;--card:#fff;--ink-soft:#6e687a}
+:root[data-theme="dark"]{color-scheme:dark;--bg:#19171d;--surface:#242129;--surface2:#2c2932;--text:#f1edf4;--muted:#a49baa;--line:#39343f;--blue:#d17ba4;--blue2:#3a2c37;--red:#ef7b91;--green:#59bd9a;--shadow:0 12px 35px #0005;--accent:#d17ba4;--accent-soft:#3a2c37;--nav:#211e26;--card:#242129;--ink-soft:#c0b7c6}
+:root[data-theme="dark"] body{background:var(--bg)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:15px/1.45 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}button,input,textarea,select{font:inherit}button{cursor:pointer;border:0}button:focus-visible,input:focus-visible,textarea:focus-visible{outline:3px solid #8dbbff;outline-offset:2px}
+.app{max-width:1180px;margin:auto;min-height:100dvh;padding:24px 24px 100px}.top{display:flex;align-items:center;justify-content:space-between;margin-bottom:22px}.brand{display:flex;gap:11px;align-items:center;font-weight:800;font-size:20px;letter-spacing:-.5px}.logo{width:36px;height:36px;border-radius:12px;background:linear-gradient(145deg,#e9a0bf,#c96f9b);display:grid;place-items:center;color:white;font-weight:900;font-size:20px;box-shadow:0 6px 16px #5b8ff044}.topright{display:flex;gap:10px;align-items:center}.datepill,.iconbtn{background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:10px 13px;color:var(--text)}.iconbtn{width:42px;height:42px;display:grid;place-items:center;font-size:18px}.hello{margin:8px 0 4px;font-size:30px;letter-spacing:-1px}.sub{color:var(--muted);margin:0 0 22px}.tabs{display:flex;gap:7px;overflow:auto;padding:5px;background:var(--surface2);border:1px solid var(--line);border-radius:16px;margin-bottom:22px;scrollbar-width:none}.tabs button{white-space:nowrap;padding:10px 16px;border-radius:12px;background:transparent;color:#6c7890;font-weight:650}.tabs button.active{background:var(--surface);color:var(--text);box-shadow:0 2px 8px #1b2c4912}.layout{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(270px,.8fr);gap:20px}.panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:20px;min-width:0}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:16px}.panelhead h2{font-size:17px;margin:0;letter-spacing:-.3px}.muted{color:var(--muted)}.small{font-size:12px}.primary{background:var(--accent);color:white;padding:11px 16px;border-radius:12px;font-weight:700;box-shadow:0 5px 12px #d978a533}.secondary{background:var(--blue2);color:#397bd4;padding:9px 13px;border-radius:11px;font-weight:650}.ghost{background:var(--surface2);color:#64718a;padding:9px 12px;border-radius:11px}.danger{color:#dc5964;background:#fff0f1}.daynav{display:flex;align-items:center;gap:9px}.daynav button{background:var(--surface2);border-radius:10px;padding:7px 11px;color:#65718a}.daytitle{font-weight:750}.timeline{position:relative}.eventrow{display:grid;grid-template-columns:55px 1fr;gap:12px;min-height:82px;position:relative}.timecol{color:#9aa4b5;font-size:12px;padding-top:9px;text-align:right}.eventslot{border-left:1px solid var(--line);padding:3px 0 13px 15px;position:relative}.event{border-radius:14px;padding:12px 13px;background:var(--event-bg,var(--blue2));border-left:4px solid var(--event-color,var(--blue));position:relative;overflow:hidden;cursor:pointer}.event.important{border:1.5px solid var(--red);border-left:4px solid var(--red)}.eventtop{display:flex;justify-content:space-between;gap:10px;align-items:start}.eventname{font-weight:750}.eventtime{font-size:12px;color:#66738a;white-space:nowrap}.eventmeta{font-size:12px;color:#6d7890;margin-top:4px}.eventprogress{height:4px;border-radius:5px;background:#ffffffb8;margin-top:9px;overflow:hidden}.eventprogress span{display:block;height:100%;background:var(--event-color,var(--blue));border-radius:5px}.subtask{display:flex;gap:8px;align-items:center;font-size:12px;margin-top:8px;color:#536078}.check{width:16px;height:16px;border-radius:50%;border:1.5px solid #9aa8bc;background:transparent;flex:none;padding:0}.check.done{background:var(--green);border-color:var(--green);position:relative}.check.done:after{content:"✓";color:white;font-size:10px;display:block;line-height:13px}.doneText{text-decoration:line-through;opacity:.55}.gaprow{margin:0 0 12px 67px;padding:6px 10px;border-radius:9px;background:var(--surface2);color:var(--muted);font-size:11px;display:flex;align-items:center;gap:6px}.gaprow b{color:#6f7c91;font-weight:650}.empty{padding:35px 15px;text-align:center;color:var(--muted)}.empty .emoji{font-size:28px;margin-bottom:8px}.sidecol{display:flex;flex-direction:column;gap:18px}.mini-calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:5px;text-align:center}.weekday{font-size:10px;color:#9aa4b5;padding:6px 0}.calday{aspect-ratio:1;border-radius:11px;background:transparent;color:#536078;position:relative;font-size:12px}.calday.mutedday{opacity:.28}.calday.selected{background:var(--accent-soft);color:var(--accent);font-weight:800}.calday.today:after{content:"";width:4px;height:4px;border-radius:50%;background:var(--accent);position:absolute;bottom:4px;left:calc(50% - 2px)}.calday.has:before{content:"";width:5px;height:5px;border-radius:50%;background:var(--accent);position:absolute;top:3px;left:calc(50% - 2px)}.calday.importantday:before{width:7px;height:7px;background:transparent;border:1.5px solid var(--red)}.quickstats{display:grid;grid-template-columns:1fr 1fr;gap:9px}.stat{padding:13px;background:var(--surface2);border-radius:13px}.stat strong{display:block;font-size:21px}.stat span{font-size:11px;color:var(--muted)}.sectionlist{display:grid;gap:12px}.listcard{padding:14px;border:1px solid var(--line);border-radius:15px;background:#fff}.listcard h3{font-size:14px;margin:0 0 6px}.listcard p{margin:0;color:var(--muted);font-size:12px}.tag{display:inline-flex;padding:4px 8px;border-radius:7px;background:var(--accent-soft);color:var(--accent);font-size:11px;margin-right:5px}.tag.urgent{background:#fff0f0;color:#db626a}.tag.today{background:#eaf8f2;color:#309c78}.tag.homework{background:#f3edff;color:#8868c8}.calendar-full{max-width:750px;margin:auto}.calendar-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}.calendar-cell{min-height:80px;border:1px solid var(--line);border-radius:12px;padding:8px;background:var(--surface);text-align:left;color:var(--text);position:relative}.calendar-cell .num{font-weight:750;font-size:13px}.dots{display:flex;gap:4px;flex-wrap:wrap;margin-top:10px}.dot{width:6px;height:6px;border-radius:50%;background:#65a6f5}.dot.outline{background:transparent;border:1.5px solid var(--red);width:7px;height:7px}.calendar-cell.selected{border-color:var(--accent);background:var(--accent-soft)}.calendar-cell.today .num{color:var(--accent)}.calendar-cell.outside{opacity:.28}.notearea{min-height:240px;outline:none;padding:17px;border:1px solid var(--line);border-radius:14px;background:var(--surface);line-height:1.65}.toolbar{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:10px}.toolbar button{background:var(--surface2);padding:8px 12px;border-radius:9px;font-weight:700}.formgrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.field{display:flex;flex-direction:column;gap:6px}.field.full{grid-column:1/-1}.field label{font-size:12px;color:#758198;font-weight:650}.field input,.field textarea,.field select{border:1px solid var(--line);border-radius:11px;padding:11px;background:var(--surface2);color:var(--text);min-width:0}.field textarea{min-height:75px;resize:vertical}.modalback{position:fixed;inset:0;background:#15213b66;display:none;align-items:center;justify-content:center;padding:15px;z-index:20}.modalback.show{display:flex}.modal{background:var(--surface);border-radius:22px;padding:22px;width:min(560px,100%);max-height:92dvh;overflow:auto;box-shadow:0 20px 70px #101d3740}.modalhead{display:flex;justify-content:space-between;align-items:center;margin-bottom:18px}.modalhead h2{margin:0;font-size:19px}.close{background:var(--surface2);border-radius:10px;width:34px;height:34px}.modalactions{display:flex;justify-content:space-between;gap:10px;margin-top:18px}.checklist-editor{display:grid;gap:7px}.taskinput{display:flex;gap:7px}.taskinput input{flex:1}.taskinput button{background:#fff0f0;color:#d65c67;border-radius:9px;width:36px}.bottomnav{position:fixed;z-index:10;bottom:0;left:0;right:0;background:color-mix(in srgb,var(--nav) 94%,transparent);backdrop-filter:blur(18px);border-top:1px solid var(--line);padding:9px max(12px,env(safe-area-inset-right)) calc(9px + env(safe-area-inset-bottom));display:flex;justify-content:center;gap:4px}.bottomnav button{flex:1;max-width:170px;background:transparent;color:#929caf;padding:7px 4px;border-radius:12px;font-size:10px;font-weight:650}.bottomnav button span{display:block;font-size:19px;margin-bottom:2px}.bottomnav button.active{color:var(--accent);background:var(--accent-soft)}.infoitem{padding:13px;border-bottom:1px solid var(--line)}.infoitem:last-child{border:0}.infoitem strong{display:block}.infoitem span{color:var(--muted);font-size:13px;white-space:pre-wrap}.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:#202b40;color:#fff;padding:10px 15px;border-radius:12px;font-size:13px;z-index:30;opacity:0;pointer-events:none;transition:.2s}.toast.show{opacity:1}.hidden{display:none!important}.mobile-only{display:none}
+@media(max-width:760px){.app{padding:16px 13px 100px}.top{margin-bottom:18px}.hello{font-size:25px}.layout{grid-template-columns:1fr}.sidecol{display:grid;grid-template-columns:1fr 1fr}.sidecol .panel:last-child{grid-column:1/-1}.panel{padding:16px;border-radius:17px}.eventrow{grid-template-columns:43px 1fr;gap:8px}.gaprow{margin-left:51px}.calendar-cell{min-height:58px;padding:6px}.formgrid{grid-template-columns:1fr 1fr}.bottomnav button{font-size:9px}.mobile-only{display:block}}
+@media(max-width:420px){.sidecol{grid-template-columns:1fr}.sidecol .panel:last-child{grid-column:auto}.datepill{font-size:12px;padding:9px}.panelhead h2{font-size:15px}}
+
+/* Flowday stage 2 */
+.theme-toggle{color:var(--accent)}
+.event.past{opacity:.48;filter:saturate(.55)}
+.event.current{box-shadow:0 0 0 2px color-mix(in srgb,var(--accent) 35%,transparent)}
+.now-row{display:grid;grid-template-columns:55px 1fr;gap:12px;align-items:center;margin:2px 0 8px;position:relative;z-index:2}
+.now-row .timecol{color:var(--accent);font-weight:800}
+.now-track{height:2px;background:var(--accent);position:relative;border-radius:3px}
+.now-track:before{content:"";position:absolute;width:8px;height:8px;border-radius:50%;background:var(--accent);left:-1px;top:-3px}
+.live-pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:9px;background:var(--accent-soft);color:var(--accent);font-size:11px;font-weight:750}
+.live-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:pulse 1.5s infinite}
+@keyframes pulse{50%{opacity:.35}}
+.calendar-cell.drop-target{outline:2px dashed var(--accent);outline-offset:2px;background:var(--accent-soft)}
+.event[draggable=true]{touch-action:pan-y}
+.stat.accent{background:var(--accent-soft)}
+.progress-track{height:7px;background:var(--surface2);border-radius:9px;overflow:hidden;margin-top:9px}
+.progress-track span{display:block;height:100%;background:var(--accent);border-radius:9px}
+.priority{font-size:10px;font-weight:750;border-radius:6px;padding:3px 6px;background:var(--surface2);color:var(--muted)}
+.priority.high{background:#fde8ed;color:#c64f6c}
+:root[data-theme="dark"] .priority.high{background:#492b37;color:#f29ab0}
+.field input[type=color]{background:var(--surface2)}
+@media(max-width:760px){.now-row{grid-template-columns:43px 1fr;gap:8px}}
+
+/* FLOWDAY — исправление тёмной темы */
+:root[data-theme="dark"] .listcard {
+    background: var(--surface2);
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .taskinput button,
+:root[data-theme="dark"] .danger {
+    background: #492b37;
+    color: #f29ab0;
+}
+
+:root[data-theme="dark"] .secondary {
+    background: var(--blue2);
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .ghost,
+:root[data-theme="dark"] .daynav button {
+    background: var(--surface2);
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .tabs button {
+    color: var(--muted);
+}
+
+:root[data-theme="dark"] .tabs button.active {
+    background: var(--surface);
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .eventtime,
+:root[data-theme="dark"] .eventmeta,
+:root[data-theme="dark"] .subtask,
+:root[data-theme="dark"] .gaprow b,
+:root[data-theme="dark"] .field label {
+    color: var(--muted);
+}
+
+:root[data-theme="dark"] .calday {
+    color: var(--text);
+}
+
+:root[data-theme="dark"] .tag.urgent {
+    background: #492b37;
+    color: #f29ab0;
+}
+
+:root[data-theme="dark"] .tag.today {
+    background: #203b32;
+    color: #75d3ad;
+}
+
+:root[data-theme="dark"] .tag.homework {
+    background: #382e4b;
+    color: #c2a8f5;
+}
+
+
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top"><div class="brand"><div class="logo">f</div>flowday</div><div class="topright"><div class="datepill" id="todayPill"></div><button class="iconbtn" id="themeToggle" title="Переключить тему" aria-label="Переключить тему">☾</button><button class="iconbtn" id="addTop" title="Добавить событие">＋</button></div></header>
+<main id="main"></main>
+</div>
+<nav class="bottomnav" id="bottomnav">
+<button data-tab="day" class="active"><span>◷</span>День</button>
+<button data-tab="calendar"><span>▦</span>Календарь</button>
+<button data-tab="lists"><span>☷</span>Списки</button>
+<button data-tab="notes"><span>✎</span>Заметки</button>
+<button data-tab="more"><span>⌑</span>Ещё</button>
+</nav>
+<div class="modalback" id="modalback"><div class="modal" role="dialog" aria-modal="true"><div class="modalhead"><h2 id="modalTitle">Новое событие</h2><button class="close" id="closeModal">✕</button></div><div id="modalBody"></div></div></div>
+<div class="toast" id="toast"></div>
+<script>
+(()=>{
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const savedTheme=localStorage.getItem('flowday-theme')||'dark';
+document.documentElement.dataset.theme=savedTheme;
+const todayISO=()=>{const d=new Date();return localDate(d)};
+const localDate=d=>`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+const parseDate=s=>new Date(s+'T12:00:00');
+const addDays=(s,n)=>{let d=parseDate(s);d.setDate(d.getDate()+n);return localDate(d)};
+const fmtDate=s=>parseDate(s).toLocaleDateString('ru-RU',{weekday:'long',day:'numeric',month:'long'});
+const esc=s=>String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const defaultData={events:[],notes:'',info:[],history:[]};
+let data;try{data={...defaultData,...JSON.parse(localStorage.getItem('flowday-data')||'{}')}}catch{data={...defaultData}}
+let tab='day',selected=todayISO(),calMonth=parseDate(todayISO()),editing=null,holdTimer=null;
+function save(){localStorage.setItem('flowday-data',JSON.stringify(data))}
+function toast(s){let t=$('#toast');t.textContent=s;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2200)}
+function timeMin(t){let [h,m]=t.split(':').map(Number);return h*60+m}
+function duration(e){return Math.max(0,(timeMin(e.end)-timeMin(e.start)))}
+function fmtMinutes(n){if(n<60)return `${n} мин`;let h=Math.floor(n/60),m=n%60;return `${h} ч${m?' '+m+' мин':''}`}
+function eventDays(e){let a=[],d=e.date;while(d<=e.endDate){a.push(d);d=addDays(d,1);if(a.length>370)break}return a}
+function eventsForDay(day){return data.events.filter(e=>eventDays(e).includes(day)).sort((a,b)=>a.start.localeCompare(b.start))}
+function dayTasks(e){return (e.tasks||[]).slice().sort((a,b)=>Number(a.done)-Number(b.done))}
+function remember(e){let h=data.history.find(x=>x.title.toLowerCase()===e.title.toLowerCase());if(!h){h={title:e.title,count:0,times:[]};data.history.push(h)}h.count++;if(!h.times.includes(e.start))h.times.push(e.start);save()}
+function render(){ $('#todayPill').textContent=new Date().toLocaleDateString('ru-RU',{day:'numeric',month:'short'});
+let themeBtn=$('#themeToggle');if(themeBtn){themeBtn.textContent=document.documentElement.dataset.theme==='dark'?'☀':'☾';themeBtn.classList.add('theme-toggle')}$$('#bottomnav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));let m=$('#main');if(tab==='day')m.innerHTML=renderDay();if(tab==='calendar')m.innerHTML=renderCalendar();if(tab==='lists')m.innerHTML=renderLists();if(tab==='notes')m.innerHTML=renderNotes();if(tab==='more')m.innerHTML=renderMore();bind()}
+function renderDay(){
+let ev=eventsForDay(selected),today=selected===todayISO(),now=new Date(),nowm=now.getHours()*60+now.getMinutes();
+let totalTasks=ev.reduce((a,e)=>a+(e.tasks||[]).length,0),doneTasks=ev.reduce((a,e)=>a+(e.tasks||[]).filter(t=>t.done).length,0);
+let planned=ev.reduce((a,e)=>a+Math.max(0,(e.endDate===selected?timeMin(e.end):1440)-(e.date===selected?timeMin(e.start):0)),0);
+let next=ev.find(e=>{let s=e.date===selected?timeMin(e.start):0, en=e.endDate===selected?timeMin(e.end):1440;return today&&en>nowm});
+let countdown=next?(timeMin(next.start)>nowm?`До «${esc(next.title)}» ${fmtMinutes(timeMin(next.start)-nowm)}`:`Сейчас: ${esc(next.title)}`):'Свободное время';
+let html=`<h1 class="hello">${today?'Твой день':fmtDate(selected)}</h1><p class="sub">Планируй осознанно. Время видно с первого взгляда.</p><div class="tabs"><button class="active" id="showTimeline">Расписание</button><button id="showAgenda">Повестка</button></div><div class="layout"><section class="panel"><div class="panelhead"><div class="daynav"><button id="prevDay">‹</button><span class="daytitle">${fmtDate(selected)}</span><button id="nextDay">›</button></div><button class="primary" id="addEvent">＋ Добавить</button></div>`;
+if(!ev.length)html+=`<div class="empty"><div class="emoji">☀️</div><b>Пока свободный день</b><p>Добавь первое событие и собери свой ритм.</p><button class="secondary" id="emptyAdd">Создать событие</button></div>`;
+else{
+ let cursor=null,nowInserted=false;
+ ev.forEach((e,i)=>{
+  let start=e.date===selected?e.start:'00:00',end=e.endDate===selected?e.end:'24:00',sm=timeMin(start),em=end==='24:00'?1440:timeMin(end);
+  if(today&&!nowInserted&&nowm>= (cursor??0)&&nowm<sm){html+=`<div class="now-row"><div class="timecol">${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}</div><div class="now-track"></div></div>`;nowInserted=true}
+  if(cursor!==null&&sm>cursor)html+=`<div class="gaprow">◷ <b>${fmtMinutes(sm-cursor)}</b> свободного времени</div>`;
+  let progress=today?Math.max(0,Math.min(100,(nowm-sm)/Math.max(1,em-sm)*100)):selected<todayISO()?100:0;
+  let past=today&&em<=nowm,current=today&&sm<=nowm&&nowm<em,tasks=dayTasks(e),priority=e.priority||'normal';
+  html+=`<div class="eventrow"><div class="timecol">${e.date===selected?e.start:'00:00'}</div><div class="eventslot"><article class="event ${e.important?'important':''} ${past?'past':''} ${current?'current':''}" data-event="${e.id}" draggable="true" style="--event-color:${e.color};--event-bg:${e.bg}"><div class="eventtop"><div><div class="eventname">${esc(e.title)} ${e.important?'✦':''} ${priority==='high'?'<span class="priority high">ВАЖНО</span>':priority==='low'?'<span class="priority">НИЗКИЙ</span>':''}</div><div class="eventmeta">${e.date===e.endDate?`${e.start} — ${e.end}`:`${e.date===selected?e.start:'00:00'} — ${e.endDate===selected?e.end:'24:00'} · ${e.date} → ${e.endDate}`}${e.place?' · '+esc(e.place):''}</div></div><span class="eventtime">${tasks.length?tasks.filter(t=>t.done).length+'/'+tasks.length+' ✓':''}</span></div>${tasks.length?tasks.map(t=>`<div class="subtask"><button class="check ${t.done?'done':''}" data-task="${t.id}" data-eid="${e.id}" aria-label="Отметить задачу"></button><span class="${t.done?'doneText':''}">${esc(t.text)}</span></div>`).join(''):''}<div class="eventprogress"><span style="width:${progress}%"></span></div></article></div></div>`;
+  cursor=Math.max(cursor??0,em);
+ });
+ if(today&&!nowInserted&&nowm>= (cursor??0)&&nowm<1440)html+=`<div class="now-row"><div class="timecol">${String(now.getHours()).padStart(2,'0')}:${String(now.getMinutes()).padStart(2,'0')}</div><div class="now-track"></div></div>`;
+}
+let pct=totalTasks?Math.round(doneTasks/totalTasks*100):0;
+html+=`</section><aside class="sidecol"><section class="panel"><div class="panelhead"><h2>Сейчас</h2><span class="live-pill"><i class="live-dot"></i> LIVE</span></div><strong>${countdown}</strong><p class="muted small" style="margin-bottom:0">${today?'Линия времени обновляется автоматически':'Просмотр выбранной даты'}</p></section><section class="panel"><div class="panelhead"><h2>Мини-календарь</h2><button class="ghost" id="goCalendar">Все даты</button></div>${miniCalendar(selected)}</section><section class="panel"><div class="panelhead"><h2>Итоги дня</h2></div><div class="quickstats"><div class="stat"><strong>${ev.length}</strong><span>событий</span></div><div class="stat"><strong>${doneTasks}/${totalTasks}</strong><span>задач выполнено</span></div><div class="stat"><strong>${fmtMinutes(planned)}</strong><span>запланировано</span></div><div class="stat accent"><strong>${pct}%</strong><span>выполнение задач</span></div></div><div class="progress-track"><span style="width:${pct}%"></span></div></section><section class="panel"><div class="panelhead"><h2>Быстрые подсказки</h2></div>${suggestions()}</section></aside></div>`;return html}
+function miniCalendar(day){let d=parseDate(day),first=new Date(d.getFullYear(),d.getMonth(),1),start=(first.getDay()+6)%7;let out='<div class="mini-calendar">'+['П','В','С','Ч','П','С','В'].map(x=>`<div class="weekday">${x}</div>`).join('');for(let i=0;i<35;i++){let dt=new Date(first);dt.setDate(1-start+i);let s=localDate(dt),has=data.events.some(e=>eventDays(e).includes(s)),imp=data.events.some(e=>e.important&&eventDays(e).includes(s));out+=`<button class="calday ${dt.getMonth()!==d.getMonth()?'mutedday':''} ${s===day?'selected':''} ${s===todayISO()?'today':''} ${has?'has':''} ${imp?'importantday':''}" data-date="${s}">${dt.getDate()}</button>`}return out+'</div>'}
+function suggestions(){let hs=data.history.slice().sort((a,b)=>b.count-a.count).slice(0,3);return hs.length?hs.map(h=>`<div class="infoitem"><strong>${esc(h.title)}</strong><span>${h.count} раз · обычно ${h.times.join(' / ')}</span><button class="ghost" style="margin-top:7px" data-suggest="${esc(h.title)}">Добавить снова</button></div>`).join(''):'<p class="muted small">Когда начнёшь планировать, здесь появятся привычные события и варианты времени.</p>'}
+function renderCalendar(){let y=calMonth.getFullYear(),mo=calMonth.getMonth(),first=new Date(y,mo,1),offset=(first.getDay()+6)%7,days=new Date(y,mo+1,0).getDate(),html=`<h1 class="hello">Календарь</h1><p class="sub">Твои планы — сегодня, завтра и даже год назад.</p><section class="panel calendar-full"><div class="panelhead"><div class="daynav"><button id="prevMonth">‹</button><h2>${first.toLocaleDateString('ru-RU',{month:'long',year:'numeric'})}</h2><button id="nextMonth">›</button></div><button class="secondary" id="monthToday">Сегодня</button></div><div class="calendar-grid">${['Пн','Вт','Ср','Чт','Пт','Сб','Вс'].map(x=>`<div class="weekday">${x}</div>`).join('')}`;
+let total=Math.ceil((offset+days)/7)*7;for(let i=0;i<total;i++){let n=i-offset+1,dt=new Date(y,mo,n),s=localDate(dt),outside=dt.getMonth()!==mo,es=data.events.filter(e=>eventDays(e).includes(s));html+=`<button class="calendar-cell ${outside?'outside':''} ${s===selected?'selected':''} ${s===todayISO()?'today':''}" data-date="${s}"><span class="num">${dt.getDate()}</span><div class="dots">${es.slice(0,5).map(e=>`<i class="dot ${e.important?'outline':''}" style="${e.important?'':'background:'+e.color}"></i>`).join('')}</div></button>`}html+=`</div></section><section class="panel calendar-full" style="margin-top:18px"><div class="panelhead"><h2>${fmtDate(selected)}</h2><button class="primary" id="addEvent">＋ Добавить</button></div>${eventsForDay(selected).length?eventsForDay(selected).map(e=>`<div class="listcard" data-event="${e.id}" draggable="true" style="border-left:4px solid ${e.important?'#ef626c':e.color};margin-bottom:8px"><h3>${esc(e.title)} ${e.important?'✦':''}</h3><p>${e.start} — ${e.end} · ${esc(e.place||'Без места')}</p></div>`).join(''):'<p class="muted">На эту дату событий нет.</p>'}</section>`;return html}
+function renderLists(){let groups=[['general','Общие дела','Дела, которые остаются на виду в любом дне.',''],['urgent','ОБЩИЕ СРОЧНЫЕ ДЕЛА','Самое важное — всегда под рукой.','urgent'],['today','Сегодняшние дела','Только для выбранного дня.','today']];return `<h1 class="hello">Мои списки</h1><p class="sub">Три постоянные группы — доступны независимо от календаря.</p><div class="layout"><section class="panel"><div class="panelhead"><h2>Быстрый доступ</h2><button class="primary" id="addListItem">＋ Добавить</button></div><div class="sectionlist">${groups.map(([key,title,desc,cls])=>{let items=data.events.filter(e=>e.group===key&&(key!=='today'||e.date===todayISO()));return `<div class="listcard"><div class="panelhead"><h3>${title}</h3><span class="tag ${cls}">${items.length}</span></div><p>${desc}</p>${items.length?items.map(e=>`<div class="infoitem" data-event="${e.id}"><strong>${esc(e.title)}</strong><span>${e.date} · ${e.start}–${e.end}</span></div>`).join(''):'<p style="margin-top:12px">Пока пусто</p>'}</div>`}).join('')}</div></section><aside class="panel"><h2 style="margin-top:0">Как это работает</h2><p class="muted small">Общие дела видны в любой дате. Срочные выделяются отдельно. Сегодняшние автоматически привязаны к текущему дню.</p><div class="infoitem"><span class="tag">Общие</span> Напоминания и регулярные дела</div><div class="infoitem"><span class="tag urgent">Срочные</span> Дела, которые нельзя упустить</div><div class="infoitem"><span class="tag today">Сегодня</span> Фокус только на текущем дне</div></aside></div>`}
+function renderNotes(){return `<h1 class="hello">Заметки</h1><p class="sub">Сначала выгрузи мысли, потом разложи их по нужным спискам.</p><section class="panel"><div class="toolbar"><button data-cmd="bold"><b>B</b></button><button data-cmd="italic"><i>I</i></button><button data-cmd="underline"><u>U</u></button><button id="autoLinks">↗ Контакты</button></div><div class="notearea" id="notearea" contenteditable="true" data-placeholder="Запиши всё, что не хочется забыть…">${data.notes||''}</div><div class="panelhead" style="margin-top:15px;margin-bottom:0"><span class="muted small">Сохраняется автоматически</span><div style="display:flex;gap:7px"><button class="secondary" data-distribute="general">В общие</button><button class="secondary" data-distribute="urgent">В срочные</button><button class="secondary" data-distribute="today">На сегодня</button></div></div></section>`}
+function renderMore(){return `<h1 class="hello">Ещё</h1><p class="sub">Домашние задания, сведения и резервная копия.</p><div class="layout"><section class="panel"><div class="panelhead"><h2>ДЗ · проекты</h2><button class="primary" id="addHomework">＋ Проект</button></div>${data.events.filter(e=>e.group==='homework').map(e=>`<div class="listcard" data-event="${e.id}"><h3>${esc(e.title)}</h3><p>${e.date} · ${e.tasks?.length||0} задач</p></div>`).join('')||'<div class="empty">Здесь будут проекты и домашние задания — отдельно от расписания.</div>'}</section><section class="panel"><div class="panelhead"><h2>Сведения</h2><button class="secondary" id="addInfo">＋</button></div>${data.info.map((x,i)=>`<div class="infoitem"><strong>${esc(x.title)}</strong><span>${esc(x.value)}</span><button class="ghost danger" data-delinfo="${i}">Удалить</button></div>`).join('')||'<p class="muted small">Контакты преподавателей, номер группы и другая полезная информация.</p>'}</section></div><section class="panel" style="margin-top:18px"><div class="panelhead"><h2>Данные приложения</h2></div><p class="muted small">Все данные хранятся локально в этом браузере. Экспортируй резервную копию, чтобы перенести планы на другое устройство.</p><div style="display:flex;gap:8px;flex-wrap:wrap"><button class="secondary" id="exportData">Экспортировать данные</button><label class="secondary" style="cursor:pointer">Импортировать<input type="file" id="importData" accept="application/json" hidden></label><button class="ghost danger" id="clearData">Очистить всё</button></div></section>`}
+function openModal(e=null,group='calendar'){editing=e?.id||null;let is=e||{};let sug=data.history.filter(h=>h.title!==is.title).slice(0,5);$('#modalTitle').textContent=e?'Редактировать событие':'Новое событие';$('#modalBody').innerHTML=`<form id="eventForm"><div class="formgrid"><div class="field full"><label>Название</label><input name="title" required maxlength="90" value="${esc(is.title||'')}" placeholder="Например, лекция по математике" list="historyTitles"><datalist id="historyTitles">${data.history.map(h=>`<option value="${esc(h.title)}">`).join('')}</datalist></div><div class="field"><label>Дата начала</label><input type="date" name="date" required value="${is.date||selected}"></div><div class="field"><label>Дата окончания</label><input type="date" name="endDate" required value="${is.endDate||is.date||selected}"></div><div class="field"><label>Начало</label><input type="time" name="start" required value="${is.start||'09:00'}"></div><div class="field"><label>Конец</label><input type="time" name="end" required value="${is.end||'10:00'}"></div><div class="field"><label>Группа</label><select name="group"><option value="calendar">Событие календаря</option><option value="general">Общие дела</option><option value="urgent">Срочные дела</option><option value="today">Сегодняшние дела</option><option value="homework">ДЗ / проект</option></select></div><div class="field"><label>Приоритет</label><select name="priority"><option value="normal">Обычный</option><option value="high">Высокий</option><option value="low">Низкий</option></select></div><div class="field"><label>Место</label><input name="place" value="${esc(is.place||'')}" placeholder="Аудитория, адрес…"></div><div class="field"><label>Цвет события</label><input type="color" name="color" value="${is.color||'#69a8f5'}" style="height:43px;padding:4px"></div><div class="field"><label>Повторение</label><select name="repeat"><option value="none">Не повторять</option><option value="daily">Каждый день (30 дней)</option><option value="weekly">Каждую неделю (12 недель)</option></select></div><div class="field full"><label>Подзадачи / чек-лист</label><div class="checklist-editor" id="taskEditor">${(is.tasks||[]).map(t=>taskEditorRow(t.text)).join('')}</div><button type="button" class="ghost" id="addTaskRow">＋ Добавить задачу</button></div><div class="field full"><label><input type="checkbox" name="important" ${is.important?'checked':''}> Отметить как важное ✦</label></div></div><div class="modalactions">${e?'<button type="button" class="ghost danger" id="deleteEvent">Удалить</button>':'<span></span>'}<div style="display:flex;gap:8px"><button type="button" class="ghost" id="cancelEvent">Отмена</button><button class="primary" type="submit">Сохранить</button></div></div></form>`;let f=$('#eventForm');f.elements.group.value=is.group||group;if(f.elements.priority)f.elements.priority.value=is.priority||'normal';$('#addTaskRow').onclick=()=>$('#taskEditor').insertAdjacentHTML('beforeend',taskEditorRow(''));$('#cancelEvent').onclick=closeModal;if(e)$('#deleteEvent').onclick=()=>{if(confirm('Удалить событие?')){data.events=data.events.filter(x=>x.id!==e.id);save();closeModal();render()}};f.onsubmit=ev=>{ev.preventDefault();let fd=new FormData(f),date=fd.get('date'),endDate=fd.get('endDate'),start=fd.get('start'),end=fd.get('end');if(endDate<date|| (endDate===date&&end<=start)){toast('Проверь даты и время');return}let tasks=$$('#taskEditor input').map((x,i)=>({id:(is.tasks?.[i]?.id)||crypto.randomUUID(),text:x.value.trim(),done:is.tasks?.[i]?.done||false})).filter(t=>t.text);let obj={id:is.id||crypto.randomUUID(),title:fd.get('title').trim(),date,endDate,start,end,group:fd.get('group'),place:fd.get('place'),color:fd.get('color'),bg:colorBg(fd.get('color')),important:fd.get('important')==='on',priority:fd.get('priority')||'normal',tasks};if(editing){data.events=data.events.map(x=>x.id===editing?obj:x)}else{data.events.push(obj);remember(obj);let rep=fd.get('repeat'),count=rep==='daily'?30:rep==='weekly'?12:1,step=rep==='weekly'?7:1;for(let i=1;i<count;i++){let nd=addDays(date,i*step),ne=addDays(endDate,i*step);data.events.push({...obj,id:crypto.randomUUID(),date:nd,endDate:ne,tasks:tasks.map(t=>({...t,id:crypto.randomUUID(),done:false}))})}}save();closeModal();render();toast('Событие сохранено')};$('#modalback').classList.add('show')}
+function taskEditorRow(v){return `<div class="taskinput"><input value="${esc(v)}" placeholder="Например, подготовить конспект"><button type="button" class="removeTask">×</button></div>`}
+function colorBg(hex){try{let n=parseInt(hex.slice(1),16),r=n>>16,g=n>>8&255,b=n&255;return `rgba(${r},${g},${b},.15)`}catch{return '#e9f2ff'}}
+function closeModal(){$('#modalback').classList.remove('show')}
+function bind(){
+$('#addTop').onclick=()=>openModal();['addEvent','emptyAdd'].forEach(id=>{let x=$('#'+id);if(x)x.onclick=()=>openModal()});let p=$('#prevDay'),n=$('#nextDay');if(p)p.onclick=()=>{selected=addDays(selected,-1);render()};if(n)n.onclick=()=>{selected=addDays(selected,1);render()};let gc=$('#goCalendar');if(gc)gc.onclick=()=>{tab='calendar';calMonth=parseDate(selected);render()};$$('[data-date]').forEach(b=>b.onclick=()=>{selected=b.dataset.date;if(tab==='calendar')render();else render()});$$('[data-task]').forEach(b=>b.onclick=ev=>{ev.stopPropagation();let e=data.events.find(x=>x.id===b.dataset.eid),t=e.tasks.find(x=>x.id===b.dataset.task);t.done=!t.done;save();render()});$$('[data-event]').forEach(el=>{el.onclick=()=>{if(el.dataset.longpressed==='1'){el.dataset.longpressed='0';return}let e=data.events.find(x=>x.id===el.dataset.event);if(e)openModal(e)};el.oncontextmenu=ev=>{ev.preventDefault();offerMove(el.dataset.event)}});$$('[data-suggest]').forEach(b=>b.onclick=()=>{let h=data.history.find(x=>x.title===b.dataset.suggest);openModal({title:h.title,date:selected,endDate:selected,start:h.times[0]||'12:00',end:plusHour(h.times[0]||'12:00'),group:'calendar',tasks:[]})});$$('[data-cmd]').forEach(b=>b.onclick=()=>{document.execCommand(b.dataset.cmd);$('#notearea').focus()});let note=$('#notearea');if(note)note.oninput=()=>{data.notes=note.innerHTML;save()};$$('[data-distribute]').forEach(b=>b.onclick=()=>{let plain=($('#notearea').innerText||'').trim();if(!plain){toast('Сначала напиши заметку');return}openModal({title:plain.slice(0,70),date:selected,endDate:selected,start:'12:00',end:'12:30',group:b.dataset.distribute,tasks:[]},b.dataset.distribute)});$$('.removeTask').forEach(b=>b.onclick=()=>b.parentElement.remove());
+let pm=$('#prevMonth'),nm=$('#nextMonth');if(pm)pm.onclick=()=>{calMonth.setMonth(calMonth.getMonth()-1);render()};if(nm)nm.onclick=()=>{calMonth.setMonth(calMonth.getMonth()+1);render()};let mt=$('#monthToday');if(mt)mt.onclick=()=>{selected=todayISO();calMonth=parseDate(selected);render()};let al=$('#addListItem');if(al)al.onclick=()=>openModal(null,'general');let ah=$('#addHomework');if(ah)ah.onclick=()=>openModal(null,'homework');let ai=$('#addInfo');if(ai)ai.onclick=()=>{let title=prompt('Название (например, Преподаватель)');if(!title)return;let value=prompt('Контакт или информация');if(value===null)return;data.info.push({title,value});save();render()};$$('[data-delinfo]').forEach(b=>b.onclick=()=>{data.info.splice(+b.dataset.delinfo,1);save();render()});let ex=$('#exportData');if(ex)ex.onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='flowday-backup.json';a.click();URL.revokeObjectURL(a.href)};let im=$('#importData');if(im)im.onchange=async()=>{try{let x=JSON.parse(await im.files[0].text());if(!x.events||!Array.isArray(x.events))throw 0;data={...defaultData,...x};save();render();toast('Данные импортированы')}catch{toast('Не удалось прочитать файл')}};let cl=$('#clearData');if(cl)cl.onclick=()=>{if(confirm('Удалить все события, заметки и сведения?')){data={...defaultData};save();render()}};let links=$('#autoLinks');if(links)links.onclick=()=>{let n=$('#notearea');n.innerHTML=n.innerHTML.replace(/([A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,})/gi,'<a href="mailto:$1">$1</a>').replace(/(\+?\d[\d\s()\-]{7,}\d)/g,'<a href="tel:$1">$1</a>');data.notes=n.innerHTML;save();toast('Контакты распознаны')};
+let themeToggle=$('#themeToggle');if(themeToggle)themeToggle.onclick=()=>{let next=document.documentElement.dataset.theme==='dark'?'light':'dark';document.documentElement.dataset.theme=next;localStorage.setItem('flowday-theme',next);let meta=$('meta[name="theme-color"]');if(meta)meta.content=next==='dark'?'#19171d':'#f7f5f8';render()};
+$$('[data-event]').forEach(el=>{
+ el.addEventListener('dragstart',ev=>{ev.dataTransfer.setData('text/flowday-event',el.dataset.event);ev.dataTransfer.effectAllowed='move'});
+});
+$$('.calendar-cell,[data-date].calday').forEach(cell=>{
+ cell.addEventListener('dragover',ev=>{ev.preventDefault();cell.classList.add('drop-target')});
+ cell.addEventListener('dragleave',()=>cell.classList.remove('drop-target'));
+ cell.addEventListener('drop',ev=>{ev.preventDefault();cell.classList.remove('drop-target');let id=ev.dataTransfer.getData('text/flowday-event'),e=data.events.find(x=>x.id===id);if(!e)return;let delta=Math.round((parseDate(cell.dataset.date)-parseDate(e.date))/86400000);e.date=cell.dataset.date;e.endDate=addDays(e.endDate,delta);save();selected=cell.dataset.date;calMonth=parseDate(selected);render();toast('Событие перенесено')});
+});
+$$('[data-event]').forEach(el=>{
+ let timer=null,moved=false;
+ el.addEventListener('touchstart',()=>{moved=false;timer=setTimeout(()=>{if(!moved){el.dataset.longpressed='1';offerMove(el.dataset.event);timer=null}},650)},{passive:true});
+ el.addEventListener('touchmove',()=>{moved=true;if(timer){clearTimeout(timer);timer=null}},{passive:true});
+ el.addEventListener('touchend',()=>{if(timer)clearTimeout(timer);timer=null},{passive:true});
+});
+}
+function plusHour(t){let [h,m]=t.split(':').map(Number);return `${String((h+1)%24).padStart(2,'0')}:${String(m).padStart(2,'0')}`}
+function offerMove(id){let e=data.events.find(x=>x.id===id),left=(e.tasks||[]).filter(t=>!t.done);if(!left.length){openModal(e);return}if(!confirm(`Перенести ${left.length} незавершённых задач на другой день и время?`)){openModal(e);return}let date=prompt('Новая дата (ГГГГ-ММ-ДД)',addDays(e.endDate,1));if(!date)return;let start=prompt('Новое время начала (ЧЧ:ММ)',e.start);if(!start)return;let end=prompt('Новое время окончания (ЧЧ:ММ)',e.end);if(!end)return;data.events.push({...e,id:crypto.randomUUID(),title:e.title+' · продолжение',date,endDate:date,start,end,tasks:left.map(t=>({...t,id:crypto.randomUUID(),done:false}))});e.tasks=e.tasks.filter(t=>t.done);save();render();toast('Незавершённые задачи перенесены')}
+$('#closeModal').onclick=closeModal;$('#modalback').onclick=e=>{if(e.target===$('#modalback'))closeModal()};$('#bottomnav').onclick=e=>{let b=e.target.closest('button[data-tab]');if(b){tab=b.dataset.tab;render()}};document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+if('serviceWorker'in navigator&&location.protocol!=='file:')window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));
+render();
+setInterval(()=>{if(tab==='day'&&selected===todayISO())render()},30000);
+})();
+</script>
+</body>
+</html>

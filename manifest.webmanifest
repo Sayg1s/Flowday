@@ -1,0 +1,9 @@
+{
+  "name": "Flowday — визуальный планировщик",
+  "short_name": "Flowday",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#f4f6fb",
+  "theme_color": "#111827",
+  "description": "Визуальное расписание, задачи и заметки"
+}
